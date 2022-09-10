@@ -1,0 +1,17 @@
+br
+hr
+img
+input
+meta
+area
+base
+col
+embed
+link
+param
+source
+track
+command
+keygen
+menuitem
+wbr
