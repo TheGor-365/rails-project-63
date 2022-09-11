@@ -1,26 +1,22 @@
-class HexletCode::Tag
-  UNPAIRED_TAGS_PATH = "lib/hexlet_code/tags.txt"
+# frozen_string_literal: true
 
-  def self.build tag_name, attributes = {}, &block
-    tag = is_unpaired?(tag_name) ? "<#{tag_name}>" : "<#{tag_name}></#{tag_name}>"
-    attr_pairs = attributes.any? ? [''] : []
-    block = is_unpaired?(tag_name) ? (" #{block.call}" if block) : ("#{block.call}" if block)
+module HexletCode
+  # generates HTML tags for forms
+  class Tag
+    UNPAIRED_TAGS_PATH = "lib/hexlet_code/tags.txt"
 
-    if is_unpaired?(tag_name)
-      attributes.each { |name, value| attr_pairs << " #{name}='#{value}'" }
-      "<#{tag_name}#{attr_pairs.join()}#{block}>"
-    elsif !is_unpaired?(tag_name)
-      attributes.each { |name, value| attr_pairs << " #{name}='#{value}'" }
-      "<#{tag_name}#{attr_pairs.join()}>#{block}</#{tag_name}>"
-    else
-      tag
+    def self.build(name, attributes = {}, &block)
+      attr_pairs = attributes.any? ? [""] : []
+      block = unpaired?(name) ? (" #{block.call}" if block) : (block.call.to_s if block)
+      attributes.each { |attr, value| attr_pairs << " #{attr}='#{value}'" }
+      unpaired?(name) ? "<#{name}#{attr_pairs.join}#{block}>" : "<#{name}#{attr_pairs.join}>#{block}</#{name}>"
     end
-  end
 
-  def self.is_unpaired? tag
-    unpaired_tags_data = File.open(UNPAIRED_TAGS_PATH, 'r')
-    unpaired_tags = unpaired_tags_data.readlines(chomp: true)
-    unpaired_tags_data.close
-    unpaired_tags.include?(tag) ? true : false
+    def self.unpaired?(tag)
+      unpaired_data = File.open(UNPAIRED_TAGS_PATH, "r")
+      unpaired = unpaired_data.readlines(chomp: true)
+      unpaired_data.close
+      unpaired.include?(tag) ? true : false
+    end
   end
 end

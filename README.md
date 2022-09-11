@@ -1,12 +1,15 @@
 # HexletCode
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hexlet_code`. To experiment with that code, run `bin/console` for an interactive prompt.
+![CI](https://github.com/TheGor-365/rails-project-63/blob/main/.github/workflows/main.yml/badge.svg)
+![CI](https://github.com/TheGor-365/rails-project-63/blob/main/.github/workflows/hexlet-check.yml/badge.svg)
 
-TODO: Delete this and the text above, and describe your gem
+## Summary
+
+This gem generates tags and attributes for HTML forms. It helps backend developers do they job faster.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's `Gemfile`:
 
 ```ruby
 gem 'hexlet_code'
@@ -22,13 +25,34 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The gem contains the `build('your_tag', some_attr: 'attr_value') { block }` method, which generates clean HTML. Use next methods for
+```ruby
+require 'rails-project-63'
+
+form = HexletCode::Tag.build('form', action: "action_page/:id", method: "post") { 'Something' }
+puts form #=> <form action='action_page/:id' method='post'>Something</form>
+```
+
+You can get `paired tags`:
+
+```ruby
+HexletCode::Tag.build('div', class: 'text-muted') { 'Hello' } #=> <div class='text-muted'>Hello</div>
+```
+
+You can get `unpaired tags`:
+
+```ruby
+HexletCode::Tag.build('img', src: 'some/path', alt: 'avatar') #=> <img src='some/path' alt='avatar'>
+```
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run:
+```
+$ gem install specific_install && gem specific_install -l https://github.com/TheGor-365/rails-project-63
+```
 
 ## Contributing
 
