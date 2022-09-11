@@ -1,7 +1,7 @@
 # HexletCode
 
-![CI](https://github.com/TheGor-365/rails-project-63/blob/main/.github/workflows/main.yml/badge.svg)
-![CI](https://github.com/TheGor-365/rails-project-63/blob/main/.github/workflows/hexlet-check.yml/badge.svg)
+![CI](https://github.com/TheGor-365/rails-project-63/actions/workflows/main.yml/badge.svg)
+![CI](https://github.com/TheGor-365/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)
 
 ## Summary
 
