@@ -3,6 +3,8 @@
 require_relative "test_helper"
 
 class TestHexletCode < Minitest::Test
+  User = Struct.new(:name, :job, keyword_init: true)
+
   def test_tag_without_attributes_build
     paired_tag = "<form></form>"
     unpaired_tag = "<area>"
@@ -29,5 +31,19 @@ class TestHexletCode < Minitest::Test
     paired_tag = "<label for='email'>Email</label>"
 
     assert { HexletCode::Tag.build("label", for: "email") { "Email" } == paired_tag }
+  end
+
+  def test_empty_form_build
+    form = "<form action='#' method='post'></form>"
+    user = User.new
+
+    assert { HexletCode.form_for user == form }
+  end
+
+  def test_form_with_url_build
+    form = "<form action='/users' method='post'></form>"
+    user = User.new
+
+    assert { HexletCode.form_for user, url: form == "/users" }
   end
 end
