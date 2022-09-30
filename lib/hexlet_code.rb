@@ -7,17 +7,18 @@ module HexletCode
   autoload(:Tag, "./lib/hexlet_code/tag.rb")
 
   class << self
-    def form_for(_action, url = {})
-      return "<form action='#' method='post'>\n\t#{}\n</form>" if url.size.zero?
+    def form_for(struct, url = {})
+      return "<form action='#' method='post'>\n\t#{input(struct)}\n</form>" if url.size.zero?
 
       url.each_pair do |_name, value|
-        return "<form action='#{value}' method='post'>\n\t#{}\n</form>" if url.key?(:url)
+        return "<form action='#{value}' method='post'>\n\t#{input(struct)}\n</form>" if url.key?(:url)
       end
     end
 
-    def input(attributes = {})
-      value = self.attributes[name]
-      return "<input name='' type='text' value=''>"
+    def input(struct)
+      struct.each_pair do |name, value|
+        return "<input name='#{name if struct[name]}' type='text' value='#{value if value.present?}'>"
+      end
     end
   end
 end
@@ -28,13 +29,24 @@ user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
 
 html = HexletCode.form_for user do |f|
   # Проверяет есть ли значение внутри name
-  # p f
-  p f.input :name
+  # f.input :name
   # # Проверяет есть ли значение внутри job
-  # f.input :job, as: :text
+  # f.input :job
 end
 puts html
 puts
+
+pp user.to_h
+pp user.members
+pp user.values
+puts
+
+# <form action="#" method="post">
+#   <input name="name" type="text" value="rob">
+#   <textarea name="job" cols="20" rows="40">hexlet</textarea>
+# </form>
+
+
 
 html_2 = HexletCode.form_for user, url: '#' do |f|
   # f.input :name, class: 'user-input'
