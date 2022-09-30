@@ -4,6 +4,7 @@ require_relative "test_helper"
 
 class TestHexletCode < Minitest::Test
   User = Struct.new(:name, :job, :gender, keyword_init: true)
+  User.new(name: 'rob', job: 'hexlet', gender: 'm')
 
   def test_tag_without_attributes_build
     paired_tag = "<form></form>"
