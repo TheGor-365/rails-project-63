@@ -3,19 +3,21 @@
 module HexletCode
   # generates HTML tags for forms
   class Tag
-    UNPAIRED_TAGS_PATH = "lib/hexlet_code/tags.txt"
-
-    def self.build(name, attributes = {}, &block)
-      attr_pairs = attributes.any? ? [""] : []
-      block = unpaired?(name) ? (" #{block.call}" if block) : (block.call.to_s if block)
+    def self.build(name, **attributes)
+      attr_pairs = []
       attributes.each { |attr, value| attr_pairs << " #{attr}='#{value}'" }
-      unpaired?(name) ? "<#{name}#{attr_pairs.join}#{block}>" : "<#{name}#{attr_pairs.join}>#{block}</#{name}>"
+
+      result = []
+      result << "<#{name}"
+      result << "#{attr_pairs.join}" if attributes.any?
+      result << ">" if !unpaired?(name)
+      result << "#{yield}" if block_given?
+      unpaired?(name) ? result << ">" : result << "</#{name}>"
+      result.join
     end
 
     def self.unpaired?(tag)
-      unpaired_data = File.open(UNPAIRED_TAGS_PATH, "r")
-      unpaired = unpaired_data.readlines(chomp: true)
-      unpaired_data.close
+      unpaired = %w[ br hr img input meta area base col embed link param source track command keygen menuitem wbr ]
       unpaired.include?(tag) ? true : false
     end
   end
