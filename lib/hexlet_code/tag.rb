@@ -4,15 +4,15 @@ module HexletCode
   # generates HTML tags for forms
   class Tag
     def self.build(name, **attributes)
-      attr_pairs = []
-      attributes.each { |attr, value| attr_pairs << " #{attr}='#{value}'" }
-
+      attributes = attributes.map { |attr, value| " #{attr}='#{value}'" }
       result = []
+
       result << "<#{name}"
-      result << "#{attr_pairs.join}" if attributes.any?
+      result << "#{attributes.join}"
       result << ">" if !unpaired?(name)
       result << "#{yield}" if block_given?
       unpaired?(name) ? result << ">" : result << "</#{name}>"
+      
       result.join
     end
 
