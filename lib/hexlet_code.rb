@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "hexlet_code/version"
+
 require 'active_support/all'
+
 # generates HTML forms
 module HexletCode
   autoload(:Tag, "./lib/hexlet_code/tag.rb")
@@ -15,9 +17,9 @@ module HexletCode
       end
     end
 
-    def input(struct)
+    def input(struct, **attributes)
       struct.each_pair do |name, value|
-        return "<input name='#{name if struct[name]}' type='text' value='#{value if value.present?}'>"
+        return "<input name='#{name if struct[name]}' type='text' #{attributes if attributes.present?} value='#{value if value.present?}'>"
       end
     end
   end
@@ -28,11 +30,10 @@ User = Struct.new(:name, :job, :gender, keyword_init: true)
 user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
 
 html = HexletCode.form_for user do |f|
-  # Проверяет есть ли значение внутри name
   # f.input :name
-  # # Проверяет есть ли значение внутри job
   # f.input :job
 end
+
 puts html
 puts
 
@@ -49,7 +50,7 @@ puts
 
 
 html_2 = HexletCode.form_for user, url: '#' do |f|
-  # f.input :name, class: 'user-input'
+  f.input :name, class: 'user-input'
   # f.input :job
   # f.submit
 end
