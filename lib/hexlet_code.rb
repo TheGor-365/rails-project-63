@@ -120,3 +120,25 @@ end
 
 puts html_4
 puts
+
+
+
+html_5 = HexletCode.form_for user do |f|
+end
+
+# <form action='#' method='post'>
+# </form>
+
+puts html_5
+puts
+
+
+
+html_6 = HexletCode.form_for user, url: "/users" do |f|
+end
+
+# <form action='/users' method='post'>
+# </form>
+
+puts html_6
+puts

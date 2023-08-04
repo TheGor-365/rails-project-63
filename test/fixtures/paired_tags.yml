@@ -1,0 +1,7 @@
+form:
+  with_attr: <form action='action_page/:id' method='get'></form>
+  without_attr: <form></form>
+
+label:
+  with_block: <label>Email</label>
+  with_block_and_attr: <label for='email'>Email</label>

@@ -1,0 +1,3 @@
+area:
+  with_attr: <area src='workplace.jpg' alt='Workplace'>
+  without_attr: <area>
