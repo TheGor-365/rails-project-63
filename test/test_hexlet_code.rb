@@ -38,14 +38,14 @@ class TestHexletCode < Minitest::Test
   end
 
 
-  # def test_empty_form_build
-  #   user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
-  #   html = HexletCode.form_for user do |f|; end
-  #
-  #   form = "<form action='#' method='post'>\n</form>"
-  #
-  #   assert { html == form }
-  # end
+  def test_empty_form_build
+    user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
+
+    form = '<form action="#" method="post">\n</form>'
+    html = HexletCode.form_for user do |f|; end
+
+    assert { html == (puts form) }
+  end
   #
   #
   # def test_form_with_url_build

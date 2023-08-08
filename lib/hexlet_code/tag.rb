@@ -22,9 +22,9 @@ module HexletCode
   end
 end
 
-pp HexletCode::Tag.build('br')
-pp HexletCode::Tag.build('img', src: 'path/to/image')
-pp HexletCode::Tag.build('input', type: 'submit', value: 'Save')
-pp HexletCode::Tag.build('label') { 'Email' }
-pp HexletCode::Tag.build('label', for: 'email') { 'Email' }
-pp HexletCode::Tag.build('div')
+# pp HexletCode::Tag.build('br')
+# pp HexletCode::Tag.build('img', src: 'path/to/image')
+# pp HexletCode::Tag.build('input', type: 'submit', value: 'Save')
+# pp HexletCode::Tag.build('label') { 'Email' }
+# pp HexletCode::Tag.build('label', for: 'email') { 'Email' }
+# pp HexletCode::Tag.build('div')
