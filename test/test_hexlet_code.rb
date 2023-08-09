@@ -61,7 +61,9 @@ class TestHexletCode < Minitest::Test
     user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
 
     form = '<form action="#" method="post">
+              <label for="name">Name</label>
               <input name="name" type="text" value="rob">
+              <label for="job">Job</label>
               <textarea name="job" cols="20" rows="40">hexlet</textarea>
             </form>'
 
@@ -78,7 +80,9 @@ class TestHexletCode < Minitest::Test
     user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
 
     form = '<form action="#" method="post">
+              <label for="name">Name</label>
               <input name="name" type="text" value="rob" class="user-input">
+              <label for="job">Job</label>
               <input name="job" type="text" value="">
             </form>'
 
@@ -95,11 +99,52 @@ class TestHexletCode < Minitest::Test
     user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
 
     form = '<form action="#" method="post">
+              <label for="job">Job</label>
               <textarea cols="50" rows="50" name="job">hexlet</textarea>
             </form>'
 
     html = HexletCode.form_for user, url: '#' do |f|
       f.input :job, as: :text, rows: 50, cols: 50
+    end
+
+    assert { html == (puts form) }
+  end
+
+  def test_form_with_submit
+    user = User.new job: 'hexlet'
+
+    form = "<form action='#' method='post'>
+              <label for='name'>Name</label>
+              <input name='name' type='text' value='rob'>
+              <label for='job'>Job</label>
+              <input name='job' type='text' value='hexlet'>
+              <input type='submit' value='Save'>
+            </form>"
+
+    html = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job
+      f.submit
+    end
+
+    assert { html == (puts form) }
+  end
+
+  def test_form_with_submit_custom_name
+    user = User.new job: 'hexlet'
+
+    form = "<form action='#' method='post'>
+              <label for='name'>Name</label>
+              <input name='name' type='text' value='rob'>
+              <label for='job'>Job</label>
+              <input name='job' type='text' value='hexlet'>
+              <input type='submit' value='Wow'>
+            </form>"
+
+    html = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job
+      f.submit 'Wow'
     end
 
     assert { html == (puts form) }
