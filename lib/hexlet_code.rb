@@ -11,7 +11,6 @@ module HexletCode
   class << self
     def form_for struct, url={}, &block
       @params = struct.to_h
-      form = []
 
       if url.key?(:url)
         puts "<form action='#{url.fetch(:url)}' method='post'>\n"
@@ -22,7 +21,6 @@ module HexletCode
         print instance_eval(&block)
         print '</form>'
       end
-      puts form.join
     end
 
     def input param_name, **field_options
@@ -41,10 +39,9 @@ module HexletCode
     end
 
     def field_constructor param_name, **field_options
-      public_send(param_name, self.struct) if !@params[param_name]
+      public_send(param_name) if !@params[param_name]
 
       @field = []
-
       case field_options[:as]
       when :text
         @field << '  <textarea '
@@ -115,7 +112,7 @@ end
 #   f.input :name
 #   f.input :job, as: :text
 #
-#   # f.input :age
+#   f.input :age
 # end
 #
 # # =>  `public_send': undefined method `age' for #<struct User id=nil, name=nil, job=nil> (NoMethodError)
