@@ -71,10 +71,10 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   hexlet_code!
-  minitest (~> 5.0)
+  minitest
   minitest-power_assert
-  rake (~> 13.0)
-  rubocop (~> 1.21)
+  rake
+  rubocop
   rubocop-minitest
 
 BUNDLED WITH
