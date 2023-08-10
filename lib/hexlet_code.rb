@@ -6,7 +6,7 @@ require "active_support/all"
 
 # generates HTML forms
 module HexletCode
-  autoload(:Tag, "./lib/hexlet_code/tag.rb")
+  autoload(:Tag, "/home/gor/Desktop/ruby_projects/rails-project-63/lib/hexlet_code/tag.rb")
 
   class << self
     def form_for(struct, url = {}, &block)
