@@ -2,12 +2,12 @@ PATH
   remote: .
   specs:
     hexlet_code (0.1.0)
-      activesupport
+      activesupport (= 7.0.5)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.6)
+    activesupport (7.0.5)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -58,7 +58,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activesupport
+  activesupport (= 7.0.5)
   hexlet_code!
   minitest
   minitest-power_assert
@@ -67,4 +67,4 @@ DEPENDENCIES
   rubocop-minitest
 
 BUNDLED WITH
-   2.3.7
+   2.4.13
