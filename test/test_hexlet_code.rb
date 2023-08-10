@@ -36,7 +36,8 @@ class TestHexletCode < Minitest::Test
   def test_empty_form
     user = User.new(name: "rob", job: "hexlet", gender: "m")
 
-    form = '<form action="#" method="post">\n</form>'
+    form = '<form action="#" method="post">
+            </form>'
     html = HexletCode.form_for(user) { |f| }
 
     assert { html == (puts form) }
@@ -45,7 +46,8 @@ class TestHexletCode < Minitest::Test
   def test_empty_form_with_custom_url
     user = User.new(name: "rob", job: "hexlet", gender: "m")
 
-    form = "<form action='/users' method='post'>\n</form>"
+    form = "<form action='/users' method='post'>
+            </form>"
     html = HexletCode.form_for(user, url: "/users") { |f| }
 
     assert { html == (puts form) }
