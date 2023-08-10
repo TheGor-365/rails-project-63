@@ -58,7 +58,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activesupport (= 7.0.5)
   hexlet_code!
   minitest
   minitest-power_assert
