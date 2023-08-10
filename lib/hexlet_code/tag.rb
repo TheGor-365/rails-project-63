@@ -13,7 +13,7 @@ module HexletCode
         result << ">" unless unpaired?(name)
         result << yield if block_given?
         result << (unpaired?(name) ? ">" : "</#{name}>")
-        result.join
+        puts result.join
       end
 
       def unpaired?(tag)
