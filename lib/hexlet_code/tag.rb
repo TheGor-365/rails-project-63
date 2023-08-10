@@ -10,14 +10,14 @@ module HexletCode
 
         result << "<#{name}"
         result << attributes.join
-        result << ">" if !unpaired?(name)
+        result << ">" unless unpaired?(name)
         result << yield if block_given?
-        unpaired?(name) ? result << ">" : result << "</#{name}>"
+        result << (unpaired?(name) ? ">" : "</#{name}>")
         result.join
       end
 
       def unpaired?(tag)
-        unpaired = %w[ br hr img input meta area base col embed link param source track command keygen menuitem wbr ]
+        unpaired = %w[br hr img input meta area base col embed link param source track command keygen menuitem wbr]
         unpaired.include?(tag) ? true : false
       end
     end

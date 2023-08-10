@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "This gem generates HTML tags for forms"
   spec.homepage = "https://github.com/TheGor-365/rails-project-63"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 3.1.0"
 
   spec.metadata["allowed_push_host"] = "https://github.com/TheGor-365/rails-project-63"
 
@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'activesupport', '7.0.5'
+  spec.add_dependency "activesupport", "7.0.5"
 end
