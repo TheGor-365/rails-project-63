@@ -42,7 +42,7 @@ module HexletCode
       submit = []
 
       submit << "  <input type='submit'"
-      submit << " name='#{button_name.present? ? button_name.join : 'Save'}'"
+      submit << " name='#{button_name.present? ? button_name.join : "Save"}'"
       submit << ">"
       puts submit.join
     end
@@ -72,7 +72,7 @@ module HexletCode
     def label(param_name)
       label = []
 
-      label << "  <label for='#{param_name.to_s}'"
+      label << "  <label for='#{param_name}'"
       label << param_name.to_s.capitalize
       label << "</label>\n"
       label.join
