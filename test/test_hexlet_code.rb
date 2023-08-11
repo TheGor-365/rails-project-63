@@ -9,28 +9,28 @@ class TestHexletCode < Minitest::Test
     paired_tag =   "<form></form>"
     unpaired_tag = "<area>"
 
-    assert { HexletCode::Tag.build("form") == (puts paired_tag) }
-    assert { HexletCode::Tag.build("area") == (puts unpaired_tag) }
+    assert { HexletCode::Tag.build("form") == paired_tag }
+    assert { HexletCode::Tag.build("area") == unpaired_tag }
   end
 
   def test_tag_with_attributes
     paired_tag =   "<form action='action_page/:id' method='get'></form>"
     unpaired_tag = "<area src='workplace.jpg' alt='Workplace'>"
 
-    assert { HexletCode::Tag.build("form", action: "action_page/:id", method: "get") == (puts paired_tag) }
-    assert { HexletCode::Tag.build("area", src: "workplace.jpg", alt: "Workplace") == (puts unpaired_tag) }
+    assert { HexletCode::Tag.build("form", action: "action_page/:id", method: "get") == paired_tag }
+    assert { HexletCode::Tag.build("area", src: "workplace.jpg", alt: "Workplace") == unpaired_tag }
   end
 
   def test_tag_with_block
     paired_tag = "<label>Email</label>"
 
-    assert { HexletCode::Tag.build("label") { "Email" } == (puts paired_tag) }
+    assert { HexletCode::Tag.build("label") { "Email" } == paired_tag }
   end
 
   def test_tag_with_block_and_attributes
     paired_tag = "<label for='email'>Email</label>"
 
-    assert { HexletCode::Tag.build("label", for: "email") { "Email" } == (puts paired_tag) }
+    assert { HexletCode::Tag.build("label", for: "email") { "Email" } == paired_tag }
   end
 
   def test_empty_form
