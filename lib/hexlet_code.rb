@@ -13,12 +13,12 @@ module HexletCode
       @params = struct.to_h
 
       if url.key?(:url)
-        puts "<form action='#{url.fetch(:url)}' method='post'>\n"
-        print instance_eval(&block)
+        puts "<form action='#{url.fetch(:url)}' method='post'>"
+        instance_eval(&block)
         puts "</form>"
       else
-        puts "<form action='#' method='post'>\n"
-        print instance_eval(&block)
+        puts "<form action='#' method='post'>"
+        instance_eval(&block)
         puts "</form>"
       end
     end
@@ -36,32 +36,46 @@ module HexletCode
         end
       end
       field_constructor(param_name, **field_options)
-      puts @field.join
     end
 
     def submit(*button_name)
-      "  #{HexletCode::Tag.build("input", type: "submit", value: button_name.present? ? button_name.join : "Save")}\n"
+      submit = []
+
+      submit << "  <input type='submit'"
+      submit << " name='#{button_name.present? ? button_name.join : 'Save'}'"
+      submit << ">"
+      puts submit.join
     end
 
     def field_constructor(param_name, **field_options)
       public_send(param_name) unless @params[param_name]
+      field = []
 
-      @field = []
       case field_options[:as]
       when :text
-        @field << "  #{HexletCode::Tag.build("label", for: param_name) { param_name.to_s.capitalize }}\n"
-        @field << "  <textarea "
-        @field << @input_attrs.fetch(param_name)
-        @field << ">"
-        @field << @params.fetch(param_name)
-        @field << "</textarea>"
+        field << label(param_name)
+        field << "  <textarea "
+        field << @input_attrs.fetch(param_name)
+        field << ">"
+        field << @params.fetch(param_name)
+        field << "</textarea>"
       else
-        @field << "  #{HexletCode::Tag.build("label", for: param_name) { param_name.to_s.capitalize }}\n"
-        @field << "  <input "
-        @field << @input_attrs.fetch(param_name)
-        field_options.map { |option_name, value| @field << " #{option_name}='#{value}'" }
-        @field << ">"
+        field << label(param_name)
+        field << "  <input "
+        field << @input_attrs.fetch(param_name)
+        field_options.map { |option_name, value| field << " #{option_name}='#{value}'" }
+        field << ">"
       end
+      puts field.join
+    end
+
+    def label(param_name)
+      label = []
+
+      label << "  <label for='#{param_name.to_s}'"
+      label << param_name.to_s.capitalize
+      label << "</label>\n"
+      label.join
     end
   end
 end
