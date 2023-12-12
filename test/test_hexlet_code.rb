@@ -6,7 +6,7 @@ class TestHexletCode < Minitest::Test
   User = Struct.new(:name, :job, :gender, keyword_init: true)
 
   def test_tag_without_attributes
-    paired_tag =   "<form></form>"
+    paired_tag   = "<form></form>"
     unpaired_tag = "<area>"
 
     assert { HexletCode::Tag.build("form") == paired_tag }
@@ -14,7 +14,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_tag_with_attributes
-    paired_tag =   "<form action='action_page/:id' method='get'></form>"
+    paired_tag   = "<form action='action_page/:id' method='get'></form>"
     unpaired_tag = "<area src='workplace.jpg' alt='Workplace'>"
 
     assert { HexletCode::Tag.build("form", action: "action_page/:id", method: "get") == paired_tag }
@@ -38,9 +38,10 @@ class TestHexletCode < Minitest::Test
 
     form = '<form action="#" method="post">
             </form>'
-    html = HexletCode.form_for(user) { |f| }
 
-    assert { html == (puts form) }
+    form_builder = HexletCode.form_for(user) { |f| }
+
+    assert { form_builder == form }
   end
 
   def test_empty_form_with_custom_url
@@ -48,9 +49,10 @@ class TestHexletCode < Minitest::Test
 
     form = "<form action='/users' method='post'>
             </form>"
-    html = HexletCode.form_for(user, url: "/users") { |f| }
 
-    assert { html == (puts form) }
+    form_builder = HexletCode.form_for(user, url: "/users") { |f| }
+
+    assert { form_builder == form }
   end
 
   def test_form_with_input_and_textarea_fields
@@ -63,12 +65,12 @@ class TestHexletCode < Minitest::Test
               <textarea name="job" cols="20" rows="40">hexlet</textarea>
             </form>'
 
-    html = HexletCode.form_for user do |f|
+    form_builder = HexletCode.form_for user do |f|
       f.input :name
       f.input :job, as: :text
     end
 
-    assert { html == (puts form) }
+    assert { form_builder == form }
   end
 
   def test_form_with_input_fields_with_custom_attributes
@@ -81,12 +83,12 @@ class TestHexletCode < Minitest::Test
               <input name="job" type="text" value="">
             </form>'
 
-    html = HexletCode.form_for user, url: "#" do |f|
+    form_builder = HexletCode.form_for user, url: "#" do |f|
       f.input :name, class: "user-input"
       f.input :job
     end
 
-    assert { html == (puts form) }
+    assert { form_builder == form }
   end
 
   def test_form_with_attributes_for_textarea
@@ -97,11 +99,11 @@ class TestHexletCode < Minitest::Test
               <textarea cols="50" rows="50" name="job">hexlet</textarea>
             </form>'
 
-    html = HexletCode.form_for user, url: "#" do |f|
+    form_builder = HexletCode.form_for user, url: "#" do |f|
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    assert { html == (puts form) }
+    assert { form_builder == form }
   end
 
   def test_form_with_submit
@@ -115,13 +117,13 @@ class TestHexletCode < Minitest::Test
               <input type='submit' value='Save'>
             </form>"
 
-    html = HexletCode.form_for user do |f|
+    form_builder = HexletCode.form_for user do |f|
       f.input :name
       f.input :job
       f.submit
     end
 
-    assert { html == (puts form) }
+    assert { form_builder == form }
   end
 
   def test_form_with_submit_custom_name
@@ -135,12 +137,12 @@ class TestHexletCode < Minitest::Test
               <input type='submit' value='Wow'>
             </form>"
 
-    html = HexletCode.form_for user do |f|
+    form_builder = HexletCode.form_for user do |f|
       f.input :name
       f.input :job
       f.submit "Wow"
     end
 
-    assert { html == (puts form) }
+    assert { form_builder == form }
   end
 end
