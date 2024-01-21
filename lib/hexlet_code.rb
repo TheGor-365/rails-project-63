@@ -1,81 +1,77 @@
 # frozen_string_literal: true
 
-require_relative "hexlet_code/version"
+require_relative 'hexlet_code/version'
+# require_relative 'hexlet_code/struct'
 
-require "active_support/all"
+require 'active_support/all'
 
 # generates HTML forms
 module HexletCode
-  autoload(:Tag, "./lib/hexlet_code/tag.rb")
+  autoload(:Tag, './lib/hexlet_code/tag.rb')
 
-  class << self
-    def form_for(struct, url = {}, &block)
-      @params = struct.to_h
+  def self.form_for(struct, url = {}, *form)
+    form << (url.key?(:url) ? "<form action='#{url.fetch(:url)}' method='post'>\n" : "<form action='#' method='post'>\n")
+    form << yield(struct)
+    form << '</form>'
+    form.join
+  end
 
-      if url.key?(:url)
-        puts "<form action='#{url.fetch(:url)}' method='post'>"
-        instance_eval(&block)
-        puts "</form>"
-      else
-        puts "<form action='#' method='post'>"
-        instance_eval(&block)
-        puts "</form>"
+  def initialize(attributes)
+    @attributes = attributes
+    @fields = []
+  end
+end
+
+class Struct
+  include HexletCode
+
+  def initialize(attributes)
+    super(attributes)
+  end
+
+  def input(attr_name, **options)
+    @field = @attributes.each_with_object({}) do |(name, value), pair|
+      case options[:as]
+      when :text then pair[name] = "name='#{name}' cols='#{options.fetch(:cols, 20)}' rows='#{options.fetch(:rows, 40)}'"
+      else pair[name] = "name='#{name}' type='text' value='#{value}'"
       end
     end
 
-    def input(param_name, **field_options)
-      @params.merge! field_options
+    field_builder(attr_name, **options)
+  end
 
-      @input_attrs = @params.each_with_object({}) do |(name, value), hash|
-        case field_options[:as]
-        when :text
-          hash[name] =
-            "name='#{name}' cols='#{field_options.fetch(:cols, 20)}' rows='#{field_options.fetch(:rows, 40)}'"
-        else
-          hash[name] = "name='#{name}' type='text' value='#{value}'"
-        end
-      end
-      field_constructor(param_name, **field_options)
+  def field_builder(attr_name, **options)
+    public_send(attr_name) unless @attributes[attr_name]
+
+    case options[:as]
+    when :text
+      @fields << label(attr_name)
+      @fields << '  <textarea '
+      @fields << @field.fetch(attr_name)
+      @fields << '>'
+      @fields << @attributes.fetch(attr_name)
+      @fields << "</textarea>\n"
+    else
+      @fields << label(attr_name)
+      @fields << '  <input '
+      @fields << @field.fetch(attr_name)
+      @fields << (options.map { |name, value| " #{name}='#{value}'" })
+      @fields << ">\n"
     end
+  end
 
-    def submit(*button_name)
-      submit = []
+  def submit(*button_name)
+    @fields << "  <input type='submit'"
+    @fields << " value='#{button_name.present? ? button_name.join : 'Save'}'"
+    @fields << ">\n"
+    @fields.join
+  end
 
-      submit << "  <input type='submit'"
-      submit << " name='#{button_name.present? ? button_name.join : "Save"}'"
-      submit << ">"
-      puts submit.join
-    end
-
-    def field_constructor(param_name, **field_options)
-      public_send(param_name) unless @params[param_name]
-      field = []
-
-      case field_options[:as]
-      when :text
-        field << label(param_name)
-        field << "  <textarea "
-        field << @input_attrs.fetch(param_name)
-        field << ">"
-        field << @params.fetch(param_name)
-        field << "</textarea>"
-      else
-        field << label(param_name)
-        field << "  <input "
-        field << @input_attrs.fetch(param_name)
-        field_options.map { |option_name, value| field << " #{option_name}='#{value}'" }
-        field << ">"
-      end
-      puts field.join
-    end
-
-    def label(param_name)
-      label = []
-
-      label << "  <label for='#{param_name}'"
-      label << param_name.to_s.capitalize
-      label << "</label>\n"
-      label.join
-    end
+  def label(name, *label)
+    label << "  <label for='#{name}'"
+    label << '>'
+    label << name.to_s.capitalize
+    label << "</label>\n"
+    label.join
   end
 end

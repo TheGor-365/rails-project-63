@@ -3,23 +3,20 @@
 module HexletCode
   # generates HTML tags for forms
   class Tag
-    class << self
-      def build(name, **attributes)
-        attributes = attributes.map { |attr, value| " #{attr}='#{value}'" }
-        result = []
+    def self.build(name, *tag, **attributes)
+      attributes = attributes.map { |attr, value| " #{attr}='#{value}'" }
 
-        result << "<#{name}"
-        result << attributes.join
-        result << ">" unless unpaired?(name)
-        result << yield if block_given?
-        result << (unpaired?(name) ? ">" : "</#{name}>")
-        result.join
-      end
+      tag << "<#{name}"
+      tag << attributes.join
+      tag << '>' unless unpaired?(name)
+      tag << yield if block_given?
+      tag << (unpaired?(name) ? '>' : "</#{name}>")
+      tag.join
+    end
 
-      def unpaired?(tag)
-        unpaired = %w[br hr img input meta area base col embed link param source track command keygen menuitem wbr]
-        unpaired.include?(tag) ? true : false
-      end
+    def self.unpaired?(tag)
+      unpaired = %w[br hr img input meta area base col embed link param source track command keygen menuitem wbr]
+      unpaired.include?(tag) ? true : false
     end
   end
 end
