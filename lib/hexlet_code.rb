@@ -18,7 +18,6 @@ module HexletCode
 
   def initialize(attributes)
     @attributes = attributes
-    @fields = []
   end
 end
 
@@ -28,6 +27,7 @@ class Struct
 
   def initialize(*params)
     super
+    @fields = []
   end
 
   def input(attr_name, **options)
