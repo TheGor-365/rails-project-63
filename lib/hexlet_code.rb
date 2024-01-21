@@ -26,7 +26,7 @@ end
 class Struct
   include HexletCode
 
-  def initialize(params)
+  def initialize(params = User.new)
     super
   end
 
