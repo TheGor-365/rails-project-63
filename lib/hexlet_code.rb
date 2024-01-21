@@ -27,7 +27,7 @@ class Struct
   include HexletCode
 
   def initialize(params)
-    super(params)
+    super
   end
 
   def input(attr_name, **options)
