@@ -10,7 +10,7 @@ Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
 Layout/LineLength:
-  Max: 120
+  Max: 260
 
 Layout/EndOfLine:
    Enabled: False
@@ -26,3 +26,6 @@ Style/IdenticalConditionalBranches:
 
 Metrics/ClassLength:
   Max: 150
+
+Lint/UselessMethodDefinition:
+  Enabled: false
