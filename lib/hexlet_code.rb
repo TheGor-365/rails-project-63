@@ -22,8 +22,9 @@ class Struct
   include HexletCode
 
   def input(key, **options)
+    public_send(key) unless self.to_h[key]
     @input = []
-    
+
     field = self.to_h.each_with_object({}) do |(name, value), pair|
       pair[name] = case options[:as]
                    when :text then "name='#{name}' cols='#{options.fetch(:cols, 20)}' rows='#{options.fetch(:rows, 40)}'"
