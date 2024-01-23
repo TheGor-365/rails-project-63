@@ -9,28 +9,28 @@ class TestHexletCode < Minitest::Test
     paired_tag   = "<form></form>"
     unpaired_tag = "<area>"
 
-    assert HexletCode::Tag.build("form") == paired_tag
-    assert HexletCode::Tag.build("area") == unpaired_tag
+    assert { HexletCode::Tag.build("form") == paired_tag }
+    assert { HexletCode::Tag.build("area") == unpaired_tag }
   end
 
   def test_tag_with_attributes
     paired_tag   = "<form action='action_page/:id' method='get'></form>"
     unpaired_tag = "<area src='workplace.jpg' alt='Workplace'>"
 
-    assert HexletCode::Tag.build("form", action: "action_page/:id", method: "get") == paired_tag
-    assert HexletCode::Tag.build("area", src: "workplace.jpg", alt: "Workplace")   == unpaired_tag
+    assert { HexletCode::Tag.build("form", action: "action_page/:id", method: "get") == paired_tag }
+    assert { HexletCode::Tag.build("area", src: "workplace.jpg", alt: "Workplace")   == unpaired_tag }
   end
 
   def test_tag_with_block
     paired_tag = "<label>Email</label>"
 
-    assert HexletCode::Tag.build("label") { "Email" } == paired_tag
+    assert { HexletCode::Tag.build("label") { "Email" } == paired_tag }
   end
 
   def test_tag_with_block_and_attributes
     paired_tag = "<label for='email'>Email</label>"
 
-    assert HexletCode::Tag.build("label", for: "email") { "Email" } == paired_tag
+    assert { HexletCode::Tag.build("label", for: "email") { "Email" } == paired_tag }
   end
 
   def test_empty_form
@@ -39,7 +39,7 @@ class TestHexletCode < Minitest::Test
     form    = "<form action='#' method='post'>\n</form>"
     builder = HexletCode.form_for(user) { |f| }
 
-    assert builder == form
+    assert { builder == form }
   end
 
   def test_empty_form_with_custom_url
@@ -48,7 +48,7 @@ class TestHexletCode < Minitest::Test
     form    = "<form action='/users' method='post'>\n</form>"
     builder = HexletCode.form_for(user, url: "/users") { |f| }
 
-    assert builder == form
+    assert { builder == form }
   end
 
   def test_form_with_input_and_textarea_fields
@@ -61,7 +61,7 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text
     end
 
-    assert builder == form
+    assert { builder == form }
   end
 
   def test_form_with_input_fields_with_custom_attributes
@@ -74,7 +74,7 @@ class TestHexletCode < Minitest::Test
       f.input :job
     end
 
-    assert builder == form
+    assert { builder == form }
   end
 
   def test_form_with_attributes_for_textarea
@@ -86,7 +86,7 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    assert builder == form
+    assert { builder == form }
   end
 
   def test_form_with_submit
@@ -100,7 +100,7 @@ class TestHexletCode < Minitest::Test
       f.submit
     end
 
-    assert builder == form
+    assert { builder == form }
   end
 
   def test_form_with_submit_custom_name
@@ -114,6 +114,6 @@ class TestHexletCode < Minitest::Test
       f.submit "Wow"
     end
 
-    assert builder == form
+    assert { builder == form }
   end
 end
