@@ -40,19 +40,21 @@ class Struct
       @input << '>'
       @input << self.to_h.fetch(key)
       @input << "</textarea>\n"
+      @input << submit
     else
       @input << label(key)
       @input << "  <input "
       @input << field.fetch(key)
       @input << (options.map { |name, value| " #{name}='#{value}'" })
       @input << ">\n"
+      @input << submit
     end
   end
 
-  def submit(name=nil)
-    @input << "  <input type='submit'"
-    @input << " name='#{!name.nil? ? name : 'Save'}'"
-    @input << ">\n"
+  def submit(name=nil, *submit)
+    submit << "  <input type='submit'"
+    submit << " name='#{!name.nil? ? name : 'Save'}'"
+    submit << ">\n"
   end
 
   def label(name, *label)
