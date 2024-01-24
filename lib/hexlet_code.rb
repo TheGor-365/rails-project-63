@@ -15,6 +15,8 @@ module HexletCode
     form << "</form>"
     form.join
   end
+
+  @@input = []
 end
 
 # generates HTML fields for form
@@ -23,7 +25,7 @@ class Struct
 
   def input(key, **options)
     public_send(key) unless self.to_h[key]
-    @input = []
+
 
     field = self.to_h.each_with_object({}) do |(name, value), pair|
       pair[name] = case options[:as]
@@ -34,27 +36,25 @@ class Struct
 
     case options[:as]
     when :text
-      @input << label(key)
-      @input << "  <textarea "
-      @input << field.fetch(key)
-      @input << '>'
-      @input << self.to_h.fetch(key)
-      @input << "</textarea>\n"
-      @input << submit
+      @@input << label(key)
+      @@input << "  <textarea "
+      @@input << field.fetch(key)
+      @@input << '>'
+      @@input << self.to_h.fetch(key)
+      @@input << "</textarea>\n"
     else
-      @input << label(key)
-      @input << "  <input "
-      @input << field.fetch(key)
-      @input << (options.map { |name, value| " #{name}='#{value}'" })
-      @input << ">\n"
-      @input << submit
+      @@input << label(key)
+      @@input << "  <input "
+      @@input << field.fetch(key)
+      @@input << (options.map { |name, value| " #{name}='#{value}'" })
+      @@input << ">\n"
     end
   end
 
-  def submit(name=nil, *submit)
-    submit << "  <input type='submit'"
-    submit << " name='#{!name.nil? ? name : 'Save'}'"
-    submit << ">\n"
+  def submit(name=nil)
+    @@input << "  <input type='submit'"
+    @@input << " name='#{!name.nil? ? name : 'Save'}'"
+    @@input << ">\n"
   end
 
   def label(name, *label)
