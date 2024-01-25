@@ -25,36 +25,39 @@ end
 class Struct
   include HexletCode
 
-  def input(key, *input, **options)
-    public_send(key) unless self.to_h[key]
+  def input(key, **options)
+    public_send(key) unless to_h[key]
     @input = []
 
-    field = self.to_h.each_with_object({}) do |(name, value), pair|
+    @field = to_h.each_with_object({}) do |(name, value), pair|
       pair[name] = case options[:as]
                    when :text then "name='#{name}' cols='#{options.fetch(:cols, 20)}' rows='#{options.fetch(:rows, 40)}'"
                    else "name='#{name}' type='text' value='#{value}'"
                    end
     end
+    builder(key, **options)
+  end
 
-    if options[:as] = :text
+  def builder(key, **options)
+    if options[:as] == :text
       @input << label(key)
       @input << "  <textarea "
-      @input << field.fetch(key)
-      @input << '>'
-      @input << self.to_h.fetch(key)
+      @input << @field.fetch(key)
+      @input << ">"
+      @input << to_h.fetch(key)
       @input << "</textarea>\n"
     else
       @input << label(key)
       @input << "  <input "
-      @input << field.fetch(key)
+      @input << @field.fetch(key)
       @input << (options.map { |name, value| " #{name}='#{value}'" })
       @input << ">\n"
     end
   end
 
-  def submit(name=nil)
+  def submit(name = nil)
     @input << "  <input type='submit'"
-    @input << " name='#{!name.nil? ? name : 'Save'}'"
+    @input << " name='#{!name.nil? ? name : "Save"}'"
     @input << ">\n"
   end
 
