@@ -55,9 +55,9 @@ class Struct
     end
   end
 
-  def submit(name = nil)
+  def submit(name=nil)
     @input << "  <input type='submit'"
-    @input << " name='#{!name.nil? ? name : "Save"}'"
+    @input << (" name='#{name.nil? ? "Save" : name }'")
     @input << ">\n"
   end
 
