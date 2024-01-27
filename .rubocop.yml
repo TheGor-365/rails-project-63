@@ -2,11 +2,11 @@ AllCops:
   TargetRubyVersion: 3.1.0
 
 Style/StringLiterals:
-  Enabled: true
+  Enabled: false
   EnforcedStyle: double_quotes
 
 Style/StringLiteralsInInterpolation:
-  Enabled: true
+  Enabled: false
   EnforcedStyle: double_quotes
 
 Layout/LineLength:
