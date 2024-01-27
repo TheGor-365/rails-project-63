@@ -92,9 +92,11 @@ class TestHexletCode < Minitest::Test
   def test_form_with_submit
     user = User.new(name: "rob", job: "hexlet", gender: "m")
 
-    form = "<form action='#' method='post'>\n  <input type='submit' value='Save'>\n</form>"
+    form = "<form action='#' method='post'>\n  <label for='name'>Name</label>\n  <input name='name' type='text' value='rob'>\n  <label for='job'>Job</label>\n  <input name='job' type='text' value='hexlet'>\n  <input type='submit' value='Save'>\n</form>"
 
     builder = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job
       f.submit
     end
 
@@ -104,9 +106,11 @@ class TestHexletCode < Minitest::Test
   def test_form_with_submit_custom_name
     user = User.new(name: "rob", job: "hexlet", gender: "m")
 
-    form = "<form action='#' method='post'>\n  <input type='submit' value='Wow'>\n</form>"
+    form = "<form action='#' method='post'>\n  <label for='name'>Name</label>\n  <input name='name' type='text' value='rob'>\n  <label for='job'>Job</label>\n  <input name='job' type='text' value='hexlet'>\n  <input type='submit' value='Wow'>\n</form>"
 
-    builder = HexletCode.form_for user do |f|
+    builder = HexletCode.form_for user, method: 'get' do |f|
+      f.input :name
+      f.input :job
       f.submit "Wow"
     end
 

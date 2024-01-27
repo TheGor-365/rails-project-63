@@ -19,13 +19,12 @@ module HexletCode
     form << "</form>"
     form.join
   end
-
-  @@input = []
 end
 
 # generates HTML fields for form
 class Struct
   include HexletCode
+  @@input = []
 
   def input(key, **options)
     public_send(key) unless to_h[key]
@@ -58,7 +57,7 @@ class Struct
 
   def submit(name = nil)
     @@input << "  <input type='submit'"
-    @@input << (" name='#{name.nil? ? "Save" : name}'")
+    @@input << (" value='#{name.nil? ? "Save" : name}'")
     @@input << ">\n"
   end
 
