@@ -24,10 +24,10 @@ end
 # generates HTML fields for form
 class Struct
   include HexletCode
-  @@input = []
 
   def input(key, **options)
     public_send(key) unless to_h[key]
+    @@input = []
 
     @field = to_h.each_with_object({}) do |(name, value), pair|
       pair[name] = case options[:as]
