@@ -8,9 +8,9 @@ module HexletCode
 
       tag << "<#{name}"
       tag << attributes.join
-      tag << ">" unless unpaired?(name)
+      tag << '>' unless unpaired?(name)
       tag << yield if block_given?
-      tag << (unpaired?(name) ? ">" : "</#{name}>")
+      tag << (unpaired?(name) ? '>' : "</#{name}>")
       tag.join
     end
 
