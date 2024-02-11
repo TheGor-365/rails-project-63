@@ -16,7 +16,7 @@ module HexletCode
 
     def self.unpaired?(tag)
       unpaired = %w[br hr img input meta area base col embed link param source track command keygen menuitem wbr]
-      unpaired.include?(tag) ? true : false
+      unpaired.include?(tag)
     end
   end
 end

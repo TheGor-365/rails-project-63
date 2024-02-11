@@ -11,8 +11,8 @@ module HexletCode
 
   def self.form_for(struct, *form, **options)
     form << '<form'
-    form << " action='#{options.fetch(:url, '#')}'" || " action='#'"
-    form << " method='#{options.fetch(:method, 'post')}'" || " method='post'"
+    form << (" action='#{options.fetch(:url, '#')}'" || " action='#'")
+    form << (" method='#{options.fetch(:method, 'post')}'" || " method='post'")
     options.each { |key, value| form << " #{key}='#{value}'" if key != :url && key != :method }
     form << ">\n"
     form << yield(FormBuilder.new(struct)) if block_given?

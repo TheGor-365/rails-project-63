@@ -40,7 +40,7 @@ class TestHexletCode < Minitest::Test
       '</form>'
     ].join
 
-    builder = HexletCode.form_for(user) { |f| }
+    builder = HexletCode.form_for(user)
     assert { builder == form }
   end
 
@@ -50,7 +50,7 @@ class TestHexletCode < Minitest::Test
       "<form action='/users' method='post'>\n",
       '</form>'
     ].join
-    builder = HexletCode.form_for(user, url: '/users') { |f| }
+    builder = HexletCode.form_for(user, url: '/users')
     assert { builder == form }
   end
 
