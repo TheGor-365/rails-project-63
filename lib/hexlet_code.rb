@@ -28,7 +28,7 @@ module HexletCode
     end
 
     def input(key, **options)
-      public_send(key) unless @struct.to_h[key]
+      @struct.public_send(key) unless @struct.to_h[key]
 
       field = @struct.to_h.each_with_object({}) do |(name, value), pair|
         pair[name] = case options[:as]
