@@ -108,7 +108,7 @@ class TestHexletCode < Minitest::Test
 
     form = "<form action='#' method='post'>\n  <label for='name'>Name</label>\n  <input name='name' type='text' value='rob'>\n  <label for='job'>Job</label>\n  <input name='job' type='text' value='hexlet'>\n  <input type='submit' value='Wow'>\n</form>"
 
-    builder = HexletCode.form_for user, method: "get" do |f|
+    builder = HexletCode.form_for user do |f|
       f.input :name
       f.input :job
       f.submit "Wow"
